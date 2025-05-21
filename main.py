@@ -9,7 +9,7 @@ from typing import List, Dict
 mcp = FastMCP("KommunicateDemo", dependencies=["requests"])
 
 # Kommunicate configuration
-KOMMUNICATE_API_KEY = "Oumdg107Ny5ZslA3fNcWkRCmvs70aGef"  # 🔐 Replace with your API key
+KOMMUNICATE_API_KEY = "<KOmmunicate-APIKEY>"  # 🔐 Replace with your API key
 KOMMUNICATE_BASE_URL = "https://services.kommunicate.io"
 
 # 🧠 Sample tool: Add two numbers
