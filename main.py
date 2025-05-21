@@ -78,6 +78,7 @@ def send_message(groupId: str, fromUserName: str, message: str) -> Dict:
     response.raise_for_status()
     return response.json()
 
+# 🛠️ Tool: Change Conversation Status in Kommunicate
 @mcp.tool()
 def change_conversation_status(groupId: str, status: int) -> Dict:
     """
