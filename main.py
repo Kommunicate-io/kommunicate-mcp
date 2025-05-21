@@ -79,7 +79,7 @@ def send_message(groupId: str, fromUserName: str, message: str) -> Dict:
     return response.json()
 
 @mcp.tool()
-def change_conversation_status(group_id: str, status: int) -> Dict:
+def change_conversation_status(groupId: str, status: int) -> Dict:
     """
     Update the status of a specific conversation in Kommunicate.
 
@@ -88,7 +88,7 @@ def change_conversation_status(group_id: str, status: int) -> Dict:
     providing the unique group ID of the conversation and the new desired status code.
 
     Parameters:
-    - group_id (str): The unique identifier of the conversation (also known as groupId).
+    - groupId (str): The unique identifier of the conversation (also known as groupId).
     - status (int): The new status to set for the conversation.
         Available status codes:
           - 1: Open — Conversation is active and unresolved.
@@ -102,19 +102,19 @@ def change_conversation_status(group_id: str, status: int) -> Dict:
 
     Example:
     To mark a conversation with group ID "support-12345" as resolved, use:
-        change_conversation_status(group_id="support-12345", status=2)
+        change_conversation_status(groupId="support-12345", status=2)
     """
-    url = f"{KOMMUNICATE_BASE_URL}/rest/ws/conversation/updateConversationStatus"
+    url = f"{KOMMUNICATE_BASE_URL}/rest/ws/group/status/change"
     headers = {
         "Api-Key": KOMMUNICATE_API_KEY,
         "Content-Type": "application/json"
     }
     payload = {
-        "groupId": group_id,
+        "groupId": groupId,
         "status": status
     }
 
-    response = requests.post(url, json=payload, headers=headers)
+    response = requests.patch(url, json=payload, headers=headers)
     response.raise_for_status()
     return response.json()
 
