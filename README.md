@@ -36,19 +36,15 @@ A Model Context Protocol (MCP) server implementation for Kommunicate, enabling s
 
 ### Available Tools
 
-1. **Add Numbers**
-   - Function: `add(a: int, b: int) -> int`
-   - Description: Simple tool to add two numbers together
-
-2. **Create Conversation**
+1. **Create Conversation**
    - Function: `create_conversation(groupName: str, groupMemberList: List[str]) -> Dict`
    - Description: Creates a new conversation in Kommunicate with specified group name and member list
 
-3. **Send Message**
+2. **Send Message**
    - Function: `send_message(groupId: str, fromUserName: str, message: str) -> Dict`
    - Description: Sends a message to an existing Kommunicate conversation
 
-4. **Change Conversation Status**
+3. **Change Conversation Status**
    - Function: `change_conversation_status(groupId: str, status: int, ofUserId: str = "bot") -> Dict`
    - Description: Updates the status of a specific conversation
    - Status Codes:
