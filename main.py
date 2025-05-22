@@ -80,7 +80,7 @@ def send_message(groupId: str, fromUserName: str, message: str) -> Dict:
 
 # 🛠️ Tool: Change Conversation Status in Kommunicate
 @mcp.tool()
-def change_conversation_status(groupId: str, status: int) -> Dict:
+def change_conversation_status(groupId: str, status: int, ofUserId: str = "bot") -> Dict:
     """
     Update the status of a specific conversation in Kommunicate.
 
@@ -97,25 +97,33 @@ def change_conversation_status(groupId: str, status: int) -> Dict:
           - 3: Pending — Awaiting response or further action.
           - 4: Bot Closed — Conversation closed automatically by bot.
           - 5: Snoozed — Temporarily inactive or deferred.
+    - ofUserId (str, optional): The user ID to include in the Of-User-Id header. 
+        Defaults to "bot".
 
     Returns:
-    - A dictionary containing the response from Kommunicate indicating success or failure.
+        JSON response from Kommunicate API.
 
     Example:
     To mark a conversation with group ID "support-12345" as resolved, use:
         change_conversation_status(groupId="support-12345", status=2)
+    
+    To specify a different user:
+        change_conversation_status(groupId="support-12345", status=2, ofUserId="user@example.com")
     """
     url = f"{KOMMUNICATE_BASE_URL}/rest/ws/group/status/change"
     headers = {
         "Api-Key": KOMMUNICATE_API_KEY,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Of-User-Id": ofUserId
     }
-    payload = {
+    
+    # Using query parameters instead of JSON payload
+    params = {
         "groupId": groupId,
         "status": status
     }
 
-    response = requests.patch(url, json=payload, headers=headers)
+    response = requests.patch(url, params=params, headers=headers)
     response.raise_for_status()
     return response.json()
 
