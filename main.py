@@ -127,6 +127,99 @@ def change_conversation_status(groupId: str, status: int, ofUserId: str = "bot")
     response.raise_for_status()
     return response.json()
 
+# 👤 Tool: Update User Details in Kommunicate
+@mcp.tool()
+def update_user_details(userId: str, email: str = None, displayName: str = None, imageLink: str = None, metadata: Dict = None) -> Dict:
+    """
+    Update user details in Kommunicate.
+    
+    Args:
+        userId: The user ID to be updated.
+        email: (Optional) User's email address.
+        displayName: (Optional) User's display name.
+        imageLink: (Optional) URL of user's profile image.
+        metadata: (Optional) Dictionary of key-value pairs for additional user metadata.
+    
+    Returns:
+        JSON response from Kommunicate API.
+    
+    Example:
+        update_user_details(
+            userId="user123",
+            email="user@example.com",
+            displayName="John Doe",
+            imageLink="https://example.com/profile.jpg",
+            metadata={"key1": "value1", "key2": "value2"}
+        )
+    """
+    url = f"{KOMMUNICATE_BASE_URL}/rest/ws/user/update"
+    headers = {
+        "Api-Key": KOMMUNICATE_API_KEY,
+        "Content-Type": "application/json",
+        "Of-User-Id": userId
+    }
+    
+    # Build payload with only provided fields
+    payload = {}
+    if email is not None:
+        payload["email"] = email
+    if displayName is not None:
+        payload["displayName"] = displayName
+    if imageLink is not None:
+        payload["imageLink"] = imageLink
+    if metadata is not None:
+        payload["metadata"] = metadata
+
+    response = requests.post(url, json=payload, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+# 👥 Tool: Change Conversation Assignee in Kommunicate
+@mcp.tool()
+def change_conversation_assignee(groupId: str, assignee: str, ofUserId: str = "bot", sendNotifyMessage: bool = True, takeOverFromBot: bool = True) -> Dict:
+    """
+    Change the assignee of a conversation in Kommunicate.
+    
+    Args:
+        groupId: The unique identifier of the conversation.
+        assignee: The email ID of the human agent to assign the conversation to.
+        ofUserId: (Optional) The user ID to include in the Of-User-Id header. Defaults to "bot".
+        sendNotifyMessage: (Optional) Whether to send a notification message about the assignee change. Defaults to True.
+        takeOverFromBot: (Optional) Whether to remove all bots from the conversation. Defaults to True.
+    
+    Returns:
+        JSON response from Kommunicate API with one of the following statuses:
+        - "updated": Successfully changed assignee
+        - "already updated": Conversation already assigned to the specified agent
+        - "AGENT_IS_ALREADY_ENGAGED": Agent has reached their maximum handling limit
+        - Error responses for invalid agent ID or conversation ID
+    
+    Example:
+        change_conversation_assignee(
+            groupId="support-12345",
+            assignee="agent@example.com",
+            sendNotifyMessage=False
+        )
+    """
+    url = f"{KOMMUNICATE_BASE_URL}/rest/ws/group/assignee/change"
+    headers = {
+        "Api-Key": KOMMUNICATE_API_KEY,
+        "Content-Type": "application/json",
+        "Of-User-Id": ofUserId
+    }
+    
+    # Using query parameters as per API documentation
+    params = {
+        "groupId": groupId,
+        "assignee": assignee,
+        "sendNotifyMessage": str(sendNotifyMessage).lower(),
+        "takeOverFromBot": str(takeOverFromBot).lower()
+    }
+
+    response = requests.patch(url, params=params, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
 # 🚀 Run the server
 if __name__ == "__main__":
     mcp.run()
