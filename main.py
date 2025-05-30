@@ -9,17 +9,6 @@ from config import KOMMUNICATE_API_KEY, KOMMUNICATE_BASE_URL
 # Specify dependencies for deployment and development
 mcp = FastMCP("KommunicateDemo", dependencies=["requests"])
 
-# 🧠 Sample tool: Add two numbers
-@mcp.tool()
-def add(a: int, b: int) -> int:
-    """Add two numbers"""
-    return a + b
-
-# 🌐 Resource: Greeting
-@mcp.resource("greeting://{name}")
-def get_greeting(name: str) -> str:
-    """Get a personalized greeting"""
-    return f"Hello, {name}!"
 
 # 🛠️ Tool: Create a new Kommunicate conversation
 @mcp.tool()
@@ -214,6 +203,46 @@ def change_conversation_assignee(groupId: str, assignee: str, ofUserId: str = "b
     }
 
     response = requests.patch(url, params=params, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+# 👤 Tool: Get User Details from Kommunicate
+@mcp.tool()
+def get_user_details(userIdList: List[str]) -> List[Dict]:
+    """
+    Get details for a list of users from Kommunicate.
+    
+    Args:
+        userIdList: List of user IDs to fetch details for.
+    
+    Returns:
+        List of user detail objects containing:
+        - userId: User ID of the user
+        - userName: Display name of the user
+        - connected: Current connected status (online/offline)
+        - lastSeenAtTime: Timestamp of last seen
+        - createdAtTime: Timestamp of user creation
+        - imageLink: Profile image URL
+        - deactivated: User active/inactive status
+        - phoneNumber: User's phone number
+        - unreadCount: Total unread message count
+        - lastLoggedInAtTime: Timestamp of last login
+        - lastMessageAtTime: Timestamp of last message
+    
+    Example:
+        get_user_details(["user123", "user456"])
+    """
+    url = f"{KOMMUNICATE_BASE_URL}/rest/ws/user/v2/detail"
+    headers = {
+        "Api-Key": KOMMUNICATE_API_KEY,
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "userIdList": userIdList
+    }
+    
+    response = requests.post(url, json=payload, headers=headers)
     response.raise_for_status()
     return response.json()
 
