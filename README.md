@@ -1,3 +1,14 @@
+## About Kommunicate
+
+Kommunicate is a customer support platform that enables businesses to provide seamless customer service through multiple channels including live chat, chatbots, and messaging apps. 
+- **Multi-channel Support**: Integrate customer interactions across various platforms including web, mobile, and messaging apps
+- **AI-Powered Chatbots**: Deploy intelligent chatbots that can handle customer queries 24/7
+- **Live Chat**: Enable real-time communication between customers and support agents
+- **Conversation Management**: Track and manage customer conversations with status updates and resolution tracking
+- **User Management**: Maintain detailed user profiles with customizable metadata
+- **API Integration**: Seamlessly connect with existing systems through RESTful APIs
+- **Analytics Dashboard**: Monitor and analyze customer support metrics and performance
+
 # Kommunicate MCP Server
 
 A Model Context Protocol (MCP) server implementation for Kommunicate, enabling seamless integration of AI models with the Kommunicate platform.
