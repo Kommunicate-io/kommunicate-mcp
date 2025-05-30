@@ -7,6 +7,18 @@ A Model Context Protocol (MCP) server implementation for Kommunicate, enabling s
 - Python 3.7 or higher
 - pip (Python package manager)
 - Kommunicate API key
+## Getting Your Kommunicate API Key
+
+1. Sign up for a Kommunicate account at [https://www.kommunicate.io/](https://www.kommunicate.io/)
+2. After signing up and logging in, navigate to the Kommunicate Dashboard
+3. Go to Settings → [Install](https://dashboard.kommunicate.io/settings/install) 
+4. Generate a new API key or copy your existing one
+5. Replace the placeholder in `config.py` with your actual API key:
+   ```python
+   KOMMUNICATE_API_KEY = "your-actual-api-key-here"
+   ```
+
+> **Note**: Kommunicate uses key-based authentication. All API requests must include a valid API key either as a query parameter (`apiKey`) or in the request header (`Api-Key`). The server will only process requests that contain a valid API key.
 
 ## Installation
 
