@@ -2,15 +2,12 @@
 from mcp.server.fastmcp import FastMCP
 import requests
 from typing import List, Dict
+from config import KOMMUNICATE_API_KEY, KOMMUNICATE_BASE_URL
 
 # Initialize FastMCP server
 #mcp = FastMCP("KommunicateDemo")
 # Specify dependencies for deployment and development
 mcp = FastMCP("KommunicateDemo", dependencies=["requests"])
-
-# Kommunicate configuration
-KOMMUNICATE_API_KEY = "<Kommunicate-APIKEY>"  # 🔐 Replace with your API key
-KOMMUNICATE_BASE_URL = "https://services.kommunicate.io"
 
 # 🧠 Sample tool: Add two numbers
 @mcp.tool()
