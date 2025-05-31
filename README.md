@@ -76,3 +76,34 @@ A Model Context Protocol (MCP) server implementation for Kommunicate, enabling s
      - 3: Pending
      - 4: Bot Closed
      - 5: Snoozed
+4. **Update User Details**
+   - Function: `update_user_details(userId: str, email: str = None, displayName: str = None, imageLink: str = None, metadata: Dict = None) -> Dict`
+   - Description: Updates user information in Kommunicate
+   - Parameters:
+     - userId: Required user identifier
+     - email: Optional email address
+     - displayName: Optional display name
+     - imageLink: Optional profile image URL
+     - metadata: Optional dictionary of additional user data
+
+5. **Change Conversation Assignee**
+   - Function: `change_conversation_assignee(groupId: str, assignee: str, ofUserId: str = "bot", sendNotifyMessage: bool = True, takeOverFromBot: bool = True) -> Dict`
+   - Description: Assigns a conversation to a specific agent
+   - Parameters:
+     - groupId: Conversation identifier
+     - assignee: Agent's email ID
+     - ofUserId: Optional user ID for header (defaults to "bot")
+     - sendNotifyMessage: Optional notification flag (defaults to true)
+     - takeOverFromBot: Optional bot removal flag (defaults to true)
+
+6. **Get User Details**
+   - Function: `get_user_details(userIdList: List[str]) -> List[Dict]`
+   - Description: Retrieves detailed information for multiple users
+   - Returns user data including:
+     - userId and userName
+     - Connection status
+     - Timestamps (last seen, created, logged in, message)
+     - Profile image URL
+     - Account status
+     - Phone number
+     - Unread message count
